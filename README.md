@@ -1,11 +1,19 @@
-# dao-controll-dapps
-### DAOを運用するための簡易アプリ。フロント部分をThirdwebで構築。
+# DAO を運用するための簡易アプリ
 
-* 参考URL（Unchainのコンテンツ EthーDAOより）
-https://app.unchain.tech/learn/ETH-DAO/section-1_lesson-3
-* XX
+JavaScript だけでスマートコントラクトを扱うことができる、[thirdweb](https://thirdweb.com/) を使用
 
+- [参考ページ UNCHAIN](https://app.unchain.tech/learn/ETH-DAO/section-1_lesson-3)
 
+## 機能
+
+1. DAO のメンバーシップ NFT をミント
+2. DAO 独自のガバナンストークン
+3. DAO ダッシュボードの作成（プロポーザルへの投票など）
+
+# How to feat app
+
+1. `npm install`で関連パッケージをインストール
+2. `npm run start`を実行しプロジェクト開始
 
 ## Getting Started
 
