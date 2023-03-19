@@ -1,10 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
+import { ChainId, ConnectWallet, useAddress, useContract, useNetwork } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
-// 接続中のネットワークを取得するため useNetwork を新たにインポートします。
-import { ConnectWallet, ChainId, useNetwork, useAddress, useContract } from "@thirdweb-dev/react";
 import styles from "../styles/Home.module.css";
-import { Proposal } from "@thirdweb-dev/sdk";
-import { AddressZero } from "@ethersproject/constants";
+import { useMemo,useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+// import Head from "next/head";
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
@@ -13,35 +12,29 @@ const Home: NextPage = () => {
 
   const [network, switchNetwork] = useNetwork();
 
-  // コントラクトオブジェクトを初期化（NFT/ガバナンストークン/投票コントラクト）
-  const editionDrop = useContract("0xB74583E75aF5DcfF024d0FD1C1F6Ec862f9Dca60", "edition-drop").contract;
-  const token = useContract("0xb9910CDb772fAb91140063d1da94c0316395c7b0", "token").contract;
-  const vote = useContract("0x720A70fb09a20d2F17E6022733Ce3a998755238E", "vote").contract;
-
-  // ステート管理を定義
+  /// editionDrop コントラクトを初期化
+  const editionDrop = useContract("0xcf314019C7F59359232332643Ec2358Db8744b42", "edition-drop").contract;
+  console.log("コントラクトチェック↓");
+  console.log(editionDrop);
+  // ユーザーがメンバーシップ NFT を持っているかどうかを知るためのステートを定義
   const [hasClaimedNFT, setHasClaimedNFT] = useState(false);
+  // NFTを観んてィングしている間を表すステート定義
   const [isClaiming, setIsClaiming] = useState(false);
-  const [memberTokenAmounts, setMemberTokenAmounts] = useState<any>([]);
-  const [memberMotivationPoint, setmemberMotivationPoint] = useState<any>([]);
-  const [memberAddresses, setMemberAddresses] = useState<string[] | undefined>([]);
-  const [proposals, setProposals] = useState<Proposal[]>([]);
-  const [isVoting, setIsVoting] = useState(false);
-  const [hasVoted, setHasVoted] = useState(false);
-
-  // アドレスの長さを省略してくれる便利な関数
-  const shortenAddress = (str: string) => {
-    return str.substring(0, 6) + "..." + str.substring(str.length - 4);
-  };
 
   useEffect(() => {
-    // もしウォレットに接続されていなかったら処理をしない
+    // ウォレットに接続されていなかったら処理しない
     if (!address) {
+      console.log("ウォレットに接続されてないので処理しない↓");
       return;
     }
     // ユーザーがメンバーシップ NFT を持っているかどうかを確認する関数を定義
+    // tokenid：0を保有しているか
     const checkBalance = async () => {
       try {
         const balance = await editionDrop!.balanceOf(address, 0);
+        console.log("バランス↓");
+        console.log(balance);
+
         if (balance.gt(0)) {
           setHasClaimedNFT(true);
           console.log("🌟 this user has a membership NFT!");
@@ -54,8 +47,10 @@ const Home: NextPage = () => {
         console.error("Failed to get balance", error);
       }
     };
+
     // 関数を実行
     checkBalance();
+    console.log("checkBalance関数実行↓");
   }, [address, editionDrop]);
 
   const mintNft = async () => {
@@ -75,13 +70,14 @@ const Home: NextPage = () => {
   };
   
   // ウォレットと接続していなかったら接続を促す
-  if (!address) {
+  if (!address){
     return (
       <div className={styles.container}>
         <main className={styles.main}>
           <h1 className={styles.title}>
             Welcome to The NEO DAO.
           </h1>
+          <p></p>
           <div className={styles.connect}>
             <ConnectWallet />
           </div>
@@ -89,7 +85,7 @@ const Home: NextPage = () => {
       </div>
     );
   }
-  // テストネットが Goerli ではなかった場合に警告を表示
+  // テストネットがGoerliではなかったら警告
   else if (address && network && network?.data?.chain?.id !== ChainId.Goerli) {
     console.log("wallet address: ", address);
     console.log("network: ", network?.data?.chain?.id);
@@ -103,43 +99,25 @@ const Home: NextPage = () => {
         </main>
       </div>
     );
-  }
-  // DAOメンバーにはホーム画面を表示
+  } 
+  // HOME画面を表示
   else if (hasClaimedNFT){
     return (
-      <Layout title="Home">
-      <div className={styles.container}>
-        <main className={styles.main}>
-        <h1 className={styles.title}>Home</h1>
-        <p>Check your status for prizes</p>
-          <div>
-            <div>
-              <h2>■ Your status</h2>
-              <table className="card">
-              <thead>
-                  <tr>
-                    <th>Address  </th>
-                    <th>  Token Amount  </th>
-                    <th>  Motivation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <th>{shortenAddress(address)}</th>
-                  <th>{memberTokenAmounts[address]}</th>
-                  <th>{memberTokenAmounts[address]}</th>
-                </tr>
-                  
-                </tbody>
-              </table>
-            </div>
+      <>
+        <Layout title="THE NEO DAO">
+          <div className={styles.container}>
+            <main className={styles.main}>
+              <h1 className={styles.title}>🍪DAO Member HHome Page</h1>
+              <p>Congratulations on being a member</p>
+              <p>Here is your status</p>
+            </main>
           </div>
-        </main>
-      </div>
-      </Layout>
+        </Layout>
+      </>
     );
   }
-  // ウォレットと接続されていたら Mint ボタンを表示
+
+  // ウォレットと接続されていたらMintボタン表示
   else {
     return (
       <div className={styles.container}>

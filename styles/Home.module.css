@@ -10,6 +10,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #f7f7f7;
 }
 
 .title a {
@@ -116,4 +117,34 @@
 }
 .logo img {
   filter: invert(1);
+}
+
+.nav {
+  display: flex;
+  font-size: large;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  background-color: rgb(49, 48, 49);
+  gap: 110px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.nav a {
+  text-decoration: none;
+  color: rgb(237, 241, 236);
+  transition: all 0.3s;
+}
+
+.nav a:hover {
+  color: rgb(89, 215, 219);
+  transform: translate(1px, 1px);
+}
+
+.nav a svg {
+  margin-left: 5px;
 }

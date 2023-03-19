@@ -1,62 +1,88 @@
-# DAO を運用するための簡易アプリ
+# 社員のやる気計測アルゴリズムによるやる気可視化 DAO 運用アプリ
 
-JavaScript だけでスマートコントラクトを扱うことができる、[thirdweb](https://thirdweb.com/) を使用
+## 1. コンセプト
 
-- [参考ページ UNCHAIN](https://app.unchain.tech/learn/ETH-DAO/section-1_lesson-3)
+- 参加者の率先した活動を可視化、及び DAO アプリ
+- 社内の意欲的なアイデア出しを促すインセンティブがあるシステム
+- 上記に適したやる気計測アルゴリズムを独自に設計し実装
 
-## 機能
+## 2. 概要
 
-1. DAO のメンバーシップ NFT をミント
-2. DAO 独自のガバナンストークン
-3. DAO ダッシュボードの作成（プロポーザルへの投票など）
+1. 意見する、アイデアを出す等の活動をやる気算出アルゴリズムで定量化及び可視化<font color = "red">（実装予定）</font>
 
-## How to feat app
+- やる気がある人にはトークンをエアドロし、EV 車や BEV 車等、景品と交換でき参加者はもれなくやる気がでる
+
+2. 貢献度に応じたガバナンストークン配布
+
+- プロポーザルに投票すると 10000 トークンをエアドロ<font color = "blue">（実装済み）</font>
+- さらに設定したやる気算出アルゴリズム（後述）に基づき、月 1 で DAO 参加ユーザにガバナンストークンを付与<font color = "red">（実装予定）</font>
+- ガバナンストークン数に応じてランキング 1 を DAO のホームで表彰<font color = "red">（実装予定）</font>
+- ランキング 1 には、更に付与<font color = "red">（実装予定）</font>
+- ランキング 1 を除く他ユーザの情報は表示されないが、自身のトークン数などステータスは確認可能<font color = "red">（実装予定）</font>
+- ガバナンストークンで社内で景品と交換可能（またはボーナスに 1.3 倍掛けなど明らかなメリットを付与）<font color = "red">（実装予定）</font>
+
+3. やる気算出アルゴリズム<font color = "red">（実装予定）</font>
+
+4. 掲示板ページ<font color = "red">（実装予定）</font>
+   評価項目は以下
+
+- 積極的なプロポーザル投稿
+
+  - プロポーザルの内容がいかに設定した DAO コミュニティルールに貢献した内容か 10 段階で評価
+  - **chatGPT(GPT4)**を活用した評価(※)
+
+- 掲示板実装し、DAO に貢献するアイデア出し
+  - 上記同様**chatGPT(GPT4)**を活用した評価
+
+※プロンプトエンジニアリングで要調整
+
+5. Prize ページ<font color = "orange">（作成途中）</font>
+
+- トークンを用いて、社内業務部に申請すると景品と交換できる。
+- 景品紹介（ex）EV,BEV 車）
+
+6. Contact ページ<font color = "orange">（作成途中）</font>
+   不明点がれば運営担当者に連絡可能
+
+## 3. 使用方法（3/19 時点実装分）
+
+1. 初回ログイン時、DAO のメンバーシップ NFT をミント
+   - ログイン（メタマスクウォレット Georlie テストネット）
+   - 1NFT につき、1 プロフィールの編集機能追加可能
+   - ログイン後、ホームページへ遷移
+2. 「DAO」タブを選択すると DAO のダッシュボード画面表示
+
+- DAO 参加者リスト
+- プロポーザル関連
+
+3. DAO 独自のガバナンストークン発行
+4. DAO 　プロポーザルへの投票が可能
+   - 投票用ページにて、投票が可能
+   - 自身が投票したかどうか、項目ごとに可視化
+   - 投票するとガバナンストークンがエアドロされる
+5. 「Prize」タブを選択すると、景品紹介ページへ
+6. 「Contact」タブを選択すると、運営担当者の連絡先が掲載されたページへ
+
+## 4. 使用技術・環境
+
+[Front-end]
+
+- [Next.js](https://nextjs.org/)
+
+[Back-end]
+
+- [thirdweb](https://thirdweb.com/)
+
+[Blockchain]
+
+- 現在 Goerli テストネット環境で構築（<font color="red">最終的に Astar EVM にデプロイ予定</font>）
+
+[Others(considering)]
+
+- Whisper API (for speech recognition)
+- ChatGPT API
+
+## 5. How to start app
 
 1. `npm install`で関連パッケージをインストール
 2. `npm run start`を実行しプロジェクト開始
-
-## 追加機能候補
-
-- 別ページ
-- API でデータ取得し、データ表示
-- メンバー一覧
-- 貢献度計算メソッド
-  - メンバーに付与（ハッシュマップ？）
-  - 貢献度順に並べる
-  - 貢献度高いメンバーにトークン等付与
-
-## Getting Started
-
-Create a project using this example:
-
-```bash
-npx thirdweb create --template next-typescript-starter
-```
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-On `pages/_app.tsx`, you'll find our `ThirdwebProvider` wrapping your app, this is necessary for our [hooks](https://portal.thirdweb.com/react) and
-[UI Components](https://portal.thirdweb.com/ui-components) to work.
-
-### Deploy to IPFS
-
-Deploy a copy of your application to IPFS using the following command:
-
-```bash
-yarn deploy
-```
-
-## Learn More
-
-To learn more about thirdweb and Next.js, take a look at the following resources:
-
-- [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
-- [thirdweb TypeScript Documentation](https://docs.thirdweb.com/typescript) - learn about our JavaScript/TypeScript SDK.
-- [thirdweb Portal](https://docs.thirdweb.com) - check our guides and development resources.
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-
-You can check out [the thirdweb GitHub organization](https://github.com/thirdweb-dev) - your feedback and contributions are welcome!
-
-## Join our Discord!
-
-For any questions, suggestions, join our discord at [https://discord.gg/thirdweb](https://discord.gg/thirdweb).

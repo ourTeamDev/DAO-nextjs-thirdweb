@@ -16,10 +16,11 @@ const editionDrop = sdk.getContract("0xB74583E75aF5DcfF024d0FD1C1F6Ec862f9Dca60"
   try {
     await (await editionDrop).createBatch([
       {
-        name: "Member's Limited Sauna Hat",
+        name: "Member's Limited THE NEO APPLE",
         description:
-          "Bamb00 Collective にアクセスすることができる限定アイテムです",
-        image: readFileSync("src/scripts/assets/NFT.jpg"),
+          "THE NEO DAO にアクセスすることができる限定アイテムです",
+        // image: readFileSync("src/scripts/assets/NFT.jpg"),
+        image: readFileSync("src/scripts/assets/NFT.png"),
       },
     ]);
     console.log("✅ Successfully created a new NFT in the drop!");
