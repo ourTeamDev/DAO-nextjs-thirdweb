@@ -80,8 +80,10 @@ const Home: NextPage = () => {
       <div className={styles.container}>
         <main className={styles.main}>
           <h1 className={styles.title}>
-            Welcome to The NEO DAO.
+            Welcome to <font color ="lightgreen">THE NEO DAO.</font><br/>
+            For your inovation.
           </h1>
+          <p></p>
           <div className={styles.connect}>
             <ConnectWallet />
           </div>
@@ -110,7 +112,7 @@ const Home: NextPage = () => {
       <Layout title="Home">
       <div className={styles.container}>
         <main className={styles.main}>
-        <h1 className={styles.title}>Home</h1>
+        <h1 className={styles.title}>DAO HOME</h1>
         <p>Check your status for prizes</p>
           <div>
             <div>
@@ -144,7 +146,7 @@ const Home: NextPage = () => {
     return (
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>Mint your free 🍪DAO Membership NFT</h1>
+          <h1 className={styles.title}>Mint your free THE NEO DAO Membership NFT</h1>
           <button disabled={isClaiming} onClick={mintNft}>
             {isClaiming ? "Minting..." : "Mint your nft (FREE)"}
           </button>
